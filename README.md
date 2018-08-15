@@ -6,78 +6,42 @@ This library contains pure PHP implementations for directory managing.
 This library stripped-down version project: [Browse](https://github.com/cs-eliseev/browse.git)
 Spcial for OTUS curs backendPHP.
 
-### Usage
+### Info
 
-Usage all method exec relative set path directory.
+**Methods**
+    methods  | info
+    ------------- | -------------
+    show  | view set directory
+    scan  | view set directory & sub directory
 
-**Init**
 
-Example:
 
-```php
-$dir = new ActionDirectory(__DIR__);
-```
+**Ooperations:**
+    operations  | info
+    ------------- | -------------
+    s  | view structure
+    f  | view files
+    d  | view directoris
 
-**Set path directory**
+### Usage console
 
-Example:
+**Description**
 
-```php
-$dir->setPathDir(__DIR__);
-```
+> run methods operations directory
 
-**Get current name directory**
-
-Example:
-
-```php
-$dir->getCurrentDirName();
-```
-
-**Get parent directory**
+* method view: show, scan
+* operation view: s, f, d
+* directory - scaning directory
 
 Example:
+> run scan s ~/example
+
+### Usage Object
 
 ```php
-$dir->getParentDir();
-```
-
-**Get current path directory**
-
-Example:
-
-```php
-$dir->getPathDir();
-```
-
-**Go to parent directory**
-
-Example:
-
-```php
-$dir->gotoParentDir();
-```
-
-**Go to sub directory**
-
-Example:
-
-```php
-$dir->gotoSubDir('subDir/subDir');
-```
-
-**Show directory**
-
-Example:
-
-```php
-$dir->showDir();
-```
-
-**Show directory & sub directory**
-
-Example:
-
-```php
-$dir->scanDir();
+$browse = new BrowseDirectory();
+$arrayStructureDirectory = $browse->scanDir(
+    '~/Example',
+    's'
+)
 ```
