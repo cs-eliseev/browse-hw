@@ -13,9 +13,17 @@
         "php": ">=7.1",
         "symfony/console": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "autoload": {
         "psr-4": {
             "browse\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "": "tests/"
         }
     }
 }
