@@ -17,11 +17,11 @@ Spcial for OTUS curs backendPHP.
 
 
 **Ooperations:**
-    operations    | info
-    ------------- | --------------
-     s            | view structure
-     f            | view files
-     d            | view directoris
+    | operations | info |
+    | --- | --- |
+    | s | view structure |
+    | f | view files |
+    | d | view directoris |
 
 ### Usage console
 
