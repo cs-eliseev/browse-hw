@@ -15,8 +15,6 @@ Spcial for OTUS curs backendPHP.
 | show | view set directory |
 | scan | view set directory & sub directory |
 
-
-
 **Ooperations:**
 
 | operations | info |
@@ -35,12 +33,14 @@ Spcial for OTUS curs backendPHP.
 * operation view: s, f, d
 * directory - scaning directory
 
-**Example**
+**Example*
+
 > run scan s ~/example
 
 ### Usage Object
 
 **Example**
+
 ```php
 $browse = new BrowseDirectory();
 $arrayStructureDirectory = $browse->scanDir(
