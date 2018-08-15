@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 use browse\Abstracts\AbstractScanner;
 use browse\BrowseDirectory;
@@ -8,8 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class TestBrowseDirectory extends TestCase
 {
-
-
     public function testShowS(): void
     {
         $directory = new BrowseDirectory();
