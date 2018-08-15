@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+use browse\BrowseDirectoryScan;
+use browse\BrowseDirectoryShow;
+use Symfony\Component\Console\Application;
+
+$app = new Application('Directory information scanner.', 'v1.0.0');
+$app->addCommands([
+    new BrowseDirectoryScan(),
+    new BrowseDirectoryShow()
+]);
+$app->run();
