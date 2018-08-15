@@ -17,11 +17,11 @@ Spcial for OTUS curs backendPHP.
 
 
 **Ooperations:**
-    operations  | info
-    ------------- | -------------
-    s  | view structure
-    f  | view files
-    d  | view directoris
+    operations    | info
+    ------------- | --------------
+     s            | view structure
+     f            | view files
+     d            | view directoris
 
 ### Usage console
 
@@ -33,11 +33,12 @@ Spcial for OTUS curs backendPHP.
 * operation view: s, f, d
 * directory - scaning directory
 
-Example:
+**Example**
 > run scan s ~/example
 
 ### Usage Object
 
+**Example**
 ```php
 $browse = new BrowseDirectory();
 $arrayStructureDirectory = $browse->scanDir(
