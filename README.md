@@ -6,22 +6,33 @@ This library contains pure PHP implementations for directory managing.
 This library stripped-down version project: [Browse](https://github.com/cs-eliseev/browse.git)
 Spcial for OTUS curs backendPHP.
 
-### Info
+# Install
 
-**Methods**
+
+### Composer
+
+Execute the following command to get the latest version of the package:
+
+>composer require cs-eliseev/browse-hw
+
+# Info
+
+### Methods
 
 | methods | info |
 | --- | --- |
 | show | view set directory |
 | scan | view set directory & sub directory |
 
-**Ooperations:**
+### Ooperations
 
 | operations | info |
 | --- | --- |
 | s | view structure |
 | f | view files |
 | d | view directoris |
+
+# Usage
 
 ### Usage console
 
