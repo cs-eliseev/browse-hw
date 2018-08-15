@@ -9,19 +9,21 @@ Spcial for OTUS curs backendPHP.
 ### Info
 
 **Methods**
-    methods  | info
-    ------------- | -------------
-    show  | view set directory
-    scan  | view set directory & sub directory
+
+| methods | info |
+| --- | --- |
+| show | view set directory |
+| scan | view set directory & sub directory |
 
 
 
 **Ooperations:**
-    | operations | info |
-    | --- | --- |
-    | s | view structure |
-    | f | view files |
-    | d | view directoris |
+
+| operations | info |
+| --- | --- |
+| s | view structure |
+| f | view files |
+| d | view directoris |
 
 ### Usage console
 
