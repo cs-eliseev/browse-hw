@@ -2,8 +2,6 @@
 
 namespace browse\Abstracts;
 
-error_reporting(E_ERROR | E_PARSE);
-
 use browse\Interfaces\ScannerInterface;
 use DirectoryIterator;
 use Exception;
