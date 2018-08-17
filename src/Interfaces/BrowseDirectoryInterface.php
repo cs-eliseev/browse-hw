@@ -16,16 +16,30 @@ interface BrowseDirectoryInterface
      *
      * @param string $pathDir
      * @param string $operation
-     * @return array
+     * @param string $optionsResponse
+     *
+     * @return array|string
      */
-    public function showDir(string $pathDir,string $operation): array;
+    public function showDir(string $pathDir,string $operation, string $optionsResponse = '');
 
     /**
      * Scan directory
      *
      * @param string $pathDir
      * @param string $operation
-     * @return array
+     * @param string $optionsResponse
+     *
+     * @return array|string
      */
-    public function scanDir(string $pathDir, string $operation): array;
+    public function scanDir(string $pathDir, string $operation, string $optionsResponse = '');
+
+    /**
+     * @param string $pathDir
+     */
+    public function setPathDir(string $pathDir): void;
+
+    /**
+     * @param string $optionsResponse
+     */
+    public function setOptionsResponse(string $optionsResponse): void;
 }

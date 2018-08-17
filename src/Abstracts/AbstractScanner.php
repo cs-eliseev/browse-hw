@@ -73,6 +73,7 @@ abstract class AbstractScanner implements ScannerInterface
     {
         // check directory
         if (!is_dir($this->pathDir)) {
+            echo $this->pathDir;
             $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $this->pathDir);
         }
 
@@ -279,7 +280,7 @@ abstract class AbstractScanner implements ScannerInterface
     protected function throwException(int $code, string $msg = ''): void
     {
         throw new Exception(
-            $this->errors[$code] . ($msg ? ' ' . $msg : ''),
+            $this->errors[$code] . ($msg ? ', ' . $msg : ''),
             $code
         );
     }

@@ -2,6 +2,7 @@
 
 namespace browse;
 
+use browse\Helpers\Json;
 use browse\Interfaces\BrowseDirectoryInterface;
 use browse\Operations\Dir;
 use browse\Operations\File;
@@ -10,6 +11,8 @@ use Exception;
 
 class BrowseDirectory implements BrowseDirectoryInterface
 {
+    const RESPONSE_OPTIONS_JSON = 'j';
+    const RESPONSE_OPTIONS_STRING = 's';
 
     const OPERATION_DIR = 'd';
     const OPERATION_FILE = 'f';
@@ -20,7 +23,7 @@ class BrowseDirectory implements BrowseDirectoryInterface
     const ERROR_OPERATION_UNKNOWN = 3;
     const ERROR_OPERATION_IS_NOT_EXIST = 4;
 
-    protected $pathDir = '';
+    protected $pathDir;
 
     protected $showLink = false;
     protected $fileMode = false;
@@ -28,6 +31,9 @@ class BrowseDirectory implements BrowseDirectoryInterface
     protected $fullScan = false;
 
     protected $operation;
+    protected $optionsResponse;
+
+    protected $response;
 
     protected $errors = [
         self::ERROR_DIR_NOT_EXIST => 'Directory is not exist',
@@ -37,15 +43,17 @@ class BrowseDirectory implements BrowseDirectoryInterface
     ];
 
     /**
-     * Directory constructor.
+     * BrowseDirectory constructor
      *
      * @param string $operation
      * @param string $pathDir
+     * @param string $optionsResponse
      * @throws Exception
      */
-    public function __construct(string $operation = '', string $pathDir = '')
+    public function __construct(string $operation = '', string $pathDir = '', string $optionsResponse = '')
     {
         $this->pathDir = $pathDir;
+        $this->optionsResponse = $optionsResponse;
         if (!empty($operation)) $this->setOperation($operation);
     }
 
@@ -80,17 +88,17 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @param string $pathDir
      * @param string $operation
-     * @return array
+     * @param string $optionsResponse
+     * @return array|string
+     *
      * @throws Exception
      */
-    public function showDir(string $pathDir,string $operation): array
+    public function showDir(string $pathDir = '', string $operation = '', string $optionsResponse = '')
     {
-        if (!empty($operation)) $this->setOperation($operation);
-        if (!is_object($this->operation)) $this->throwException(self::ERROR_OPERATION_IS_NOT_EXIST);
+        $this->init($pathDir, $operation, $optionsResponse);
 
-        $this->operation->setPathDir($pathDir);
-
-        return $this->operation->showDir();
+        $this->response = $this->operation->showDir();
+        return $this->convertResponse();
     }
 
     /**
@@ -98,17 +106,70 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @param string $pathDir
      * @param string $operation
-     * @return array
+     * @param string $optionsResponse
+     * @return array|string
+     *
      * @throws Exception
      */
-    public function scanDir(string $pathDir, string $operation): array
+    public function scanDir(string $pathDir = '', string $operation = '', string $optionsResponse = '')
     {
+        $this->init($pathDir, $operation, $optionsResponse);
+
+        $this->response = $this->operation->scanDir();
+        return $this->convertResponse();
+    }
+
+    /**
+     * @param string $pathDir
+     */
+    public function setPathDir(string $pathDir): void
+    {
+        $this->pathDir = $pathDir;
+    }
+
+    /**
+     * @param string $optionsResponse
+     */
+    public function setOptionsResponse(string $optionsResponse): void
+    {
+        $this->optionsResponse = $optionsResponse;
+    }
+
+    /**
+     * @param string $pathDir
+     * @param string $operation
+     * @param string $optionsResponse
+     * @throws Exception
+     */
+    protected function init(string $pathDir, string $operation, string $optionsResponse): void
+    {
+        if (!empty($pathDir)) $this->pathDir = $pathDir;
+        if (!empty($optionsResponse)) $this->optionsResponse = $optionsResponse;
+
         if (!empty($operation)) $this->setOperation($operation);
         if (!is_object($this->operation)) $this->throwException(self::ERROR_OPERATION_IS_NOT_EXIST);
 
-        $this->operation->setPathDir($pathDir);
+        $this->operation->setPathDir($this->pathDir);
+    }
 
-        return $this->operation->scanDir();
+    /**
+     * @return array|string
+     */
+    protected function convertResponse()
+    {
+        switch ($this->optionsResponse) {
+            case self::RESPONSE_OPTIONS_STRING:
+
+                $this->response = print_r($this->response, 1);
+                break;
+
+            case self::RESPONSE_OPTIONS_JSON:
+
+                $this->response = Json::encode($this->response);
+                break;
+        }
+
+        return $this->response;
     }
 
     /**
