@@ -2,14 +2,17 @@
 
 namespace browse\Abstracts;
 
+use browse\Interfaces\SocketInterface;
 
-abstract class AbstractSocket
+abstract class AbstractSocket implements SocketInterface
 {
     const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 5030;
 
     protected $socket;
-    protected $result;
+
+    protected $request;
+    protected $response;
 
     protected $host;
     protected $port;
@@ -17,11 +20,27 @@ abstract class AbstractSocket
     protected abstract function run(): void;
 
     /**
+     * @param string $request
+     */
+    public function setRequest(string $request): void
+    {
+        $this->request = $request;
+    }
+
+    /**
      * @return string
      */
-    public function getResult(): string
+    public function getRequest()
     {
-        return $this->result;
+        return $this->request;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 
     /**
@@ -29,7 +48,7 @@ abstract class AbstractSocket
      * @param int|null $port
      * @throws \Exception
      */
-    public function init(string $host = self::DEFAULT_HOST, ?int $port = self::DEFAULT_PORT): void
+    protected function init(string $host = self::DEFAULT_HOST, ?int $port = self::DEFAULT_PORT): void
     {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         if (!is_resource($this->socket)) {

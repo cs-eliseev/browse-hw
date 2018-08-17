@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+use browse\Socket\SocketTerminalClient;
+use browse\Socket\SocketTerminalServer;
+use Symfony\Component\Console\Application;
+
+$app = new Application('Directory information scanner.', 'v1.0.0');
+$app->addCommands([
+    new SocketTerminalClient(),
+    new SocketTerminalServer()
+]);
+$app->run();

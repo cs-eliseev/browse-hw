@@ -3,9 +3,21 @@
 namespace browse\Socket;
 
 use browse\Abstracts\AbstractSocket;
+use browse\BrowseDirectory;
+use Exception;
 
 class SocketServer extends AbstractSocket
 {
+    protected $connect;
+    protected $shotDown = false;
+
+    /**
+     * SocketServer constructor
+     *
+     * @param string $host
+     * @param int|null $port
+     * @throws \Exception
+     */
     public function __construct(string $host = '', ?int $port = null)
     {
         $this->init($host, $port);
@@ -28,23 +40,86 @@ class SocketServer extends AbstractSocket
         }
     }
 
-    public function listener($threadNo)
+    public function listener($threadNo): void
     {
         while (true) {
 
             $pid = posix_getpid();
-            $socket = socket_accept($this->socket);
+            $this->connect = socket_accept($this->socket);
 
-            echo '[' . $pid . '] [' . $threadNo . '] Acceptor connect: ' . $socket . PHP_EOL;
-            socket_write($socket, 'Process pid: ' . $pid . PHP_EOL);
+            echo '[' . $pid . '] [' . $threadNo . '] Acceptor connect: ' . $this->connect . PHP_EOL;
+            socket_write($this->connect, 'Process pid: ' . $pid . PHP_EOL);
 
-            $this->result = '';
-            while (($chunk = socket_read($this->socket, 2048) ) !== '') {
-                $this->result .= $chunk;
+            // get request
+            if (false === ($this->request = trim(socket_read($this->connect, 2048)))) {
+                echo "socket_read() failed: reason: " . socket_strerror(socket_last_error($this->connect)) . "\n";
+                break;
             }
 
-            socket_write($socket, '[' . $this->result . ']' . PHP_EOL);
-            socket_close($socket);
+            // exec request
+            switch ($this->request) {
+                case 'quit':
+                    echo 'Client #' . $threadNo .': Disconnect' . "\n";
+                    break;
+
+                case 'shutdown':
+                    echo 'Client #' . $threadNo .': Server stop' . "\n";
+                    socket_close($this->connect);
+                    $this->shotDown = true;
+                    break 2;
+
+                default:
+                    $this->execCommand();
+                    socket_write($this->connect, $this->response);
+            }
+
+            socket_close($this->connect);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShotDown(): bool
+    {
+        return $this->shotDown;
+    }
+
+    protected function execCommand(): void
+    {
+        try {
+            $command = explode(' ', trim($this->request));
+
+            $method = $command[0];
+            $operation = $command[1];
+            $path_dir = $command[2];
+
+            // set response options
+            switch ($command[3] ?? '') {
+                case BrowseDirectory::RESPONSE_OPTIONS_JSON:
+                case BrowseDirectory::RESPONSE_OPTIONS_STRING:
+                    $response_options = $command[3];
+                    break;
+                default:
+                    // default response options
+                    $response_options = BrowseDirectory::RESPONSE_OPTIONS_STRING;
+                    break;
+            }
+
+            $browse = new BrowseDirectory();
+
+            switch ($method) {
+                case 'scan':
+                    $this->response = $browse->scanDir($path_dir, $operation, $response_options);
+                    break;
+
+                case 'show':
+                    $this->response = $browse->showDir($path_dir, $operation, $response_options);
+                    break;
+            }
+
+        } catch (\Throwable $e) {
+            $this->response = $e->getMessage() . PHP_EOL;
         }
     }
 }

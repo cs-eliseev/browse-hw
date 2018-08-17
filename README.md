@@ -24,7 +24,7 @@ Execute the following command to get the latest version of the package:
 | show | view set directory |
 | scan | view set directory & sub directory |
 
-### Ooperations
+### Operations
 
 | operations | info |
 | --- | --- |
@@ -32,26 +32,105 @@ Execute the following command to get the latest version of the package:
 | f | view files |
 | d | view directoris |
 
+### Format options response
+
+| options | info |
+| --- | --- |
+| default | response array |
+| s | response string |
+| j | response array |
+
 # Usage
+
+### Usage socket
+
+**Description client**
+
+> socket server host port thread
+
+* host - listener ip address
+* port - listener port
+* thread - forck count
+
+**Description client**
+
+> socket client host port method operation directory [options]
+
+* host - connect ip address or domain
+* port - connect port
+* method view: show, scan
+* operation view: s, f, d
+* directory - scaning directory
+* options - format options response
+
+| options | info |
+| --- | --- |
+| default | response string |
+| s | response string |
+| j | response array |
+
+**Example*
+
+```php
+#!/usr/bin/env php
+<?php
+$app = new Application('Directory information scanner.', 'v1.0.0');
+$app->addCommands([
+    new SocketTerminalClient(),
+    new SocketTerminalServer()
+]);
+$app->run()
+```
+
+> socket server 127.0.0.1 5030 2
+> socket client 127.0.0.1 5030 show s ~/example j
+> telnte 127.0.0.1 5030
+
+**Client command**
+
+| command | info |
+| --- | --- |
+| quit | Client cisconnect |
+| shutdown | Shutdown forck |
+
+> socket client 127.0.0.1 5030 shutdown
 
 ### Usage console
 
 **Description**
 
-> run methods operations directory
+> run methods operations directory [options]
 
 * method view: show, scan
 * operation view: s, f, d
 * directory - scaning directory
+* options - format options response
+
+| options | info |
+| --- | --- |
+| default | response string |
+| s | response string |
+| j | response array |
 
 **Example*
 
+```php
+#!/usr/bin/env php
+<?php
+$app = new Application('Directory information scanner.', 'v1.0.0');
+$app->addCommands([
+    new BrowseDirectoryTerminalScan(),
+    new BrowseDirectoryTerminalShow()
+]);
+$app->run();
+```
+
 > run scan s ~/example
 
-**Result**
+**Response**
 
 ```
-result: Array
+Array
 (
     [0] => Array
     (
@@ -166,7 +245,15 @@ $arrayStructureDirectory = $browse->scanDir(
 print_r($arrayStructureDirectory);
 ```
 
-**Result**
+**Response options**
+
+| options | info |
+| --- | --- |
+| default | response array |
+| s | response string |
+| j | response array |
+
+**Response**
 
 ```
 Array

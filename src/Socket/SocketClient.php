@@ -1,6 +1,6 @@
 <?php
 
-namespace browse\socket;
+namespace browse\Socket;
 
 use browse\Abstracts\AbstractSocket;
 
@@ -25,13 +25,13 @@ class SocketClient extends AbstractSocket
         $this->close();
     }
 
-    public function sender($msg): void
+    public function send(): void
     {
-        socket_write($this->socket, $msg, strlen($msg));
+        socket_write($this->socket, $this->request, strlen($this->request));
 
-        $this->result = '';
+        $this->response = '';
         while (($chunk = socket_read($this->socket, 2048) ) !== '') {
-            $this->result .= $chunk;
+            $this->response .= $chunk;
         }
     }
 }
