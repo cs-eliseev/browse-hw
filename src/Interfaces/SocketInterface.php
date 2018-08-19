@@ -7,13 +7,14 @@ interface SocketInterface
 {
     /**
      * @param string $request
+     * @return SocketInterface
      */
-    public function setRequest(string $request): void;
+    public function setRequest(string $request) : self;
 
     /**
      * @return string
      */
-    public function getRequest();
+    public function getRequest() : string;
 
     /**
      * @return array|string

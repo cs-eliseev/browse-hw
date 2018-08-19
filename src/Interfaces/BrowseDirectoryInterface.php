@@ -8,8 +8,21 @@ interface BrowseDirectoryInterface
      * Set operation view
      *
      * @param string $operation
+     * @return BrowseDirectoryInterface
      */
-    public function setOperation(string $operation): void;
+    public function setOperation(string $operation = '') : self;
+
+    /**
+     * @param string $pathDir
+     * @return BrowseDirectoryInterface
+     */
+    public function setPathDir(string $pathDir) : self;
+
+    /**
+     * @param string $optionsResponse
+     * @return BrowseDirectoryInterface
+     */
+    public function setOptionsResponse(string $optionsResponse) : self;
 
     /**
      * Show directory
@@ -20,7 +33,7 @@ interface BrowseDirectoryInterface
      *
      * @return array|string
      */
-    public function showDir(string $pathDir,string $operation, string $optionsResponse = '');
+    public function showDir(string $pathDir = '', string $operation = '', string $optionsResponse = '');
 
     /**
      * Scan directory
@@ -31,15 +44,5 @@ interface BrowseDirectoryInterface
      *
      * @return array|string
      */
-    public function scanDir(string $pathDir, string $operation, string $optionsResponse = '');
-
-    /**
-     * @param string $pathDir
-     */
-    public function setPathDir(string $pathDir): void;
-
-    /**
-     * @param string $optionsResponse
-     */
-    public function setOptionsResponse(string $optionsResponse): void;
+    public function scanDir(string $pathDir = '', string $operation = '', string $optionsResponse = '');
 }

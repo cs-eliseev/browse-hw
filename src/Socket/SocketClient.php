@@ -25,7 +25,7 @@ class SocketClient extends AbstractSocket
      *
      * @throws SocketException
      */
-    protected function run(): void
+    protected function run() : void
     {
         $connect = socket_connect($this->socket, $this->host, $this->port);
         if ($connect === false) {
@@ -45,7 +45,7 @@ class SocketClient extends AbstractSocket
     /**
      * Send message
      */
-    public function send(): void
+    public function send() : void
     {
         socket_write($this->socket, $this->request, strlen($this->request));
 

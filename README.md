@@ -28,7 +28,7 @@ Execute the following command to get the latest version of the package:
 
 | operations | info |
 | --- | --- |
-| s | view structure |
+| defualt | view directoris & files |
 | f | view files |
 | d | view directoris |
 
@@ -62,6 +62,8 @@ Execute the following command to get the latest version of the package:
 * operation view: s, f, d
 * directory - scaning directory
 * options - format options response
+
+Response options:
 
 | options | info |
 | --- | --- |
@@ -105,6 +107,8 @@ $app->run()
 * operation view: s, f, d
 * directory - scaning directory
 * options - format options response
+
+Response options:
 
 | options | info |
 | --- | --- |
@@ -234,24 +238,33 @@ Array
 
 ### Usage Object
 
-**Example**
+**Description**
 
-```php
-$browse = new BrowseDirectory();
-$arrayStructureDirectory = $browse->scanDir(
-    '~/Example',
-    's'
-);
-print_r($arrayStructureDirectory);
-```
+Operations:
 
-**Response options**
+| operations | info |
+| --- | --- |
+| defualt | view directoris & files |
+| f | view files |
+| d | view directoris |
+
+Response options:
 
 | options | info |
 | --- | --- |
 | default | response array |
 | s | response string |
-| j | response array |
+| j | response json |
+
+**Example**
+
+```php
+$browse = new BrowseDirectory();
+$arrayStructureDirectory = $browse->setPathDir('~/Example')
+                                  ->setOperation('s')
+                                  ->scanDir();
+print_r($arrayStructureDirectory);
+```
 
 **Response**
 

@@ -57,6 +57,4 @@ class SocketTerminalServer extends Command
 
         $output->writeln($msg);
     }
-
-
 }

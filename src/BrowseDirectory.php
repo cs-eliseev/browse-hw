@@ -47,8 +47,9 @@ class BrowseDirectory implements BrowseDirectoryInterface
      * Set operation directory
      *
      * @param string $operation
+     * @return BrowseDirectoryInterface
      */
-    public function setOperation(string $operation): void
+    public function setOperation(string $operation = '') : BrowseDirectoryInterface
     {
         switch ($operation) {
             case self::OPERATION_DIR:
@@ -63,6 +64,8 @@ class BrowseDirectory implements BrowseDirectoryInterface
                 $this->operation = new ScannerFull();
                 break;
         }
+
+        return $this;
     }
 
     /**
@@ -75,7 +78,7 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @throws BrowseDirectoryException
      */
-    public function showDir(string $pathDir = '', string $operation = '', string $optionsResponse = '')
+    public function showDir(string $operation = '', string $pathDir = '', string $optionsResponse = '')
     {
         $this->initOperations($pathDir, $operation, $optionsResponse);
 
@@ -93,7 +96,7 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @throws BrowseDirectoryException
      */
-    public function scanDir(string $pathDir = '', string $operation = '', string $optionsResponse = '')
+    public function scanDir(string $operation = '', string $pathDir = '', string $optionsResponse = '')
     {
         $this->initOperations($pathDir, $operation, $optionsResponse);
 
@@ -103,18 +106,24 @@ class BrowseDirectory implements BrowseDirectoryInterface
 
     /**
      * @param string $pathDir
+     * @return BrowseDirectoryInterface
      */
-    public function setPathDir(string $pathDir): void
+    public function setPathDir(string $pathDir): BrowseDirectoryInterface
     {
         $this->pathDir = $pathDir;
+
+        return $this;
     }
 
     /**
      * @param string $optionsResponse
+     * @return BrowseDirectoryInterface
      */
-    public function setOptionsResponse(string $optionsResponse): void
+    public function setOptionsResponse(string $optionsResponse) : BrowseDirectoryInterface
     {
         $this->optionsResponse = $optionsResponse;
+
+        return $this;
     }
 
     /**
@@ -126,7 +135,7 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @throws BrowseDirectoryException
      */
-    protected function initOperations(string $pathDir, string $operation, string $optionsResponse): void
+    protected function initOperations(string $pathDir, string $operation, string $optionsResponse) : void
     {
         if (!empty($pathDir)) $this->pathDir = $pathDir;
         if (!empty($optionsResponse)) $this->optionsResponse = $optionsResponse;
@@ -162,7 +171,7 @@ class BrowseDirectory implements BrowseDirectoryInterface
      *
      * @throws BrowseDirectoryException
      */
-    protected function validateInitOperation(): void
+    protected function validateInitOperation() : void
     {
         if (!is_object($this->operation)) {
             BrowseDirectoryException::throwException(BrowseDirectoryException::ERROR_OPERATION_IS_NOT_EXIST);

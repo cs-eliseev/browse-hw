@@ -9,42 +9,37 @@ interface ScannerInterface
      *
      * @return array
      */
-    public function showDir(): array;
+    public function showDir() : array;
 
     /**
      * Show directory & sub directory
      *
      * @return array
      */
-    public function scanDir(): array;
+    public function scanDir() : array;
 
     /**
      * Set settings show link
      *
      * @param bool $showLink
+     * @return ScannerInterface
      */
-    public function setShowLink(bool $showLink): void;
-
-    /**
-     * Set settings file mode
-     *
-     * @param bool $fileMode
-     */
-    public function setFileMode(bool $fileMode): void;
+    public function setShowLink(bool $showLink) : self;
 
     /**
      * Set current path directory
      *
      * @param string $pathDir
+     * @return ScannerInterface
      */
-    public function setPathDir(string $pathDir): void;
+    public function setPathDir(string $pathDir) : self;
 
     /**
      * Get current path directory
      *
      * @return string
      */
-    public function getPathDir(): string;
+    public function getPathDir() : string;
 
     /**
      * Get current name directory
@@ -52,7 +47,7 @@ interface ScannerInterface
      * @param string $pathDir
      * @return string
      */
-    public function getCurrentDirName(string $pathDir = ''): string;
+    public function getCurrentDirName(string $pathDir = '') : string;
 
     /**
      * Get parent directory
@@ -60,14 +55,14 @@ interface ScannerInterface
      * @param string $pathDir
      * @return string
      */
-    public function getParentDir(string $pathDir = ''): string;
+    public function getParentDir(string $pathDir = '') : string;
 
     /**
      * Go to parent directory
      *
      * @return string
      */
-    public function gotoParentDir(): string;
+    public function gotoParentDir() : string;
 
     /**
      * Go to sub directory
@@ -75,12 +70,13 @@ interface ScannerInterface
      * @param string $subDir
      * @return string
      */
-    public function gotoSubDir(string $subDir): string;
+    public function gotoSubDir(string $subDir) : string;
 
     /**
      * Check path directory
      *
      * @param $pathDir
+     * @return ScannerInterface
      */
-    public function validateDir($pathDir): void;
+    public function validateDir($pathDir) : self;
 }

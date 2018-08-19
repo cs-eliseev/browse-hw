@@ -33,7 +33,7 @@ class BrowseBaseException extends Exception implements BrowseDirectoryExceptionI
      *
      * @throws Exception
      */
-    public static function throwException(int $code, $msg = ''): void
+    public static function throwException(int $code, $msg = '') : void
     {
         throw new self(
             self::$errors[$code] . (empty($msg) ? '!' . PHP_EOL : '! ' . print_r($msg ,1) . PHP_EOL),

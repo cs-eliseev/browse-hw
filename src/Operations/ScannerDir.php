@@ -3,11 +3,12 @@
 namespace browse\Operations;
 
 use browse\Abstracts\AbstractScanner;
+use browse\Interfaces\ScannerInterface;
 use DirectoryIterator;
 
-class ScannerDir extends AbstractScanner
+class ScannerDir extends AbstractScanner implements ScannerInterface
 {
-    protected  function getItem(DirectoryIterator $item, string $path, string $defaultPath = ''): array
+    protected  function getItem(DirectoryIterator $item, string $path, string $defaultPath = '') : array
     {
         $attr = [];
         if ($item->isDir()) {

@@ -11,5 +11,5 @@ interface BrowseDirectoryExceptionInterface
      * @param int $code
      * @param $msg
      */
-    public static function throwException(int $code, $msg = ''): void;
+    public static function throwException(int $code, $msg = '') : void;
 }

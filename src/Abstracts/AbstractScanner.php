@@ -24,7 +24,7 @@ abstract class AbstractScanner implements ScannerInterface
         $this->pathDir = $pathDir;
     }
 
-    protected abstract function getItem(DirectoryIterator $item, string $path, string $defaultPath = ''): array;
+    protected abstract function getItem(DirectoryIterator $item, string $path, string $defaultPath = '') : array;
 
     /**
      * Show directory
@@ -32,7 +32,7 @@ abstract class AbstractScanner implements ScannerInterface
      * @return array
      * @throws ScannerException
      */
-    public function showDir(): array
+    public function showDir() : array
     {
         return $this->viewDir();
     }
@@ -43,7 +43,7 @@ abstract class AbstractScanner implements ScannerInterface
      * @return array
      * @throws ScannerException
      */
-    public function scanDir(): array
+    public function scanDir() : array
     {
         // enabled full scan
         $this->fullScan = true;
@@ -61,9 +61,10 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $defaultPath
      * @return array
+     *
      * @throws ScannerException
      */
-    protected function viewDir(string $defaultPath = ''): array
+    protected function viewDir(string $defaultPath = '') : array
     {
         // check directory
         $this->validateDir($this->pathDir);
@@ -118,34 +119,31 @@ abstract class AbstractScanner implements ScannerInterface
      * Set settings show link
      *
      * @param bool $showLink
+     * @return ScannerInterface
      */
-    public function setShowLink(bool $showLink): void
+    public function setShowLink(bool $showLink) : ScannerInterface
     {
         $this->showLink = $showLink;
-    }
 
-    /**
-     * Set settings file mode
-     *
-     * @param bool $fileMode
-     */
-    public function setFileMode(bool $fileMode): void
-    {
-        $this->fileMode = $fileMode;
+        return $this;
     }
 
     /**
      * Set current path directory
      *
      * @param string $pathDir
+     * @return ScannerInterface
+     *
      * @throws ScannerException
      */
-    public function setPathDir(string $pathDir): void
+    public function setPathDir(string $pathDir) : ScannerInterface
     {
         // check directory
         $this->validateDir($pathDir);
 
         $this->pathDir = $pathDir;
+
+        return $this;
     }
 
     /**
@@ -153,7 +151,7 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @return string
      */
-    public function getPathDir(): string
+    public function getPathDir() : string
     {
         return $this->pathDir;
     }
@@ -163,9 +161,10 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $pathDir
      * @return string
+     *
      * @throws ScannerException
      */
-    public function getCurrentDirName(string $pathDir = ''): string
+    public function getCurrentDirName(string $pathDir = '') : string
     {
         if (empty($pathDir)) {
 
@@ -189,9 +188,10 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $pathDir
      * @return string
+     *
      * @throws ScannerException
      */
-    public function getParentDir(string $pathDir = ''): string
+    public function getParentDir(string $pathDir = '') : string
     {
         if (empty($pathDir)) {
 
@@ -214,9 +214,8 @@ abstract class AbstractScanner implements ScannerInterface
      * Go to parent directory
      *
      * @return string
-     * @throws Exception
      */
-    public function gotoParentDir(): string
+    public function gotoParentDir() : string
     {
         $this->pathDir = $this->getParentDir();
 
@@ -228,9 +227,10 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $subDirName
      * @return string
+     *
      * @throws ScannerException
      */
-    public function gotoSubDir(string $subDirName): string
+    public function gotoSubDir(string $subDirName) : string
     {
         $path_dir = $this->pathDir . DIRECTORY_SEPARATOR . $subDirName;
 
@@ -246,12 +246,16 @@ abstract class AbstractScanner implements ScannerInterface
      * Check path directory
      *
      * @param $pathDir
+     * @return ScannerInterface
+     *
      * @throws ScannerException
      */
-    public function validateDir($pathDir): void
+    public function validateDir($pathDir) : ScannerInterface
     {
         if (!is_dir($this->pathDir)) {
             ScannerException::throwException(ScannerException::ERROR_DIR_NOT_EXIST, 'current path: ' . $pathDir);
         }
+
+        return $this;
     }
 }

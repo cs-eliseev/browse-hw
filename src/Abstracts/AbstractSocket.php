@@ -18,20 +18,23 @@ abstract class AbstractSocket implements SocketInterface
     protected $host;
     protected $port;
 
-    protected abstract function run(): void;
+    protected abstract function run() : void;
 
     /**
      * @param string $request
+     * @return SocketInterface
      */
-    public function setRequest(string $request): void
+    public function setRequest(string $request) : SocketInterface
     {
         $this->request = $request;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getRequest()
+    public function getRequest() : string
     {
         return $this->request;
     }
@@ -50,9 +53,9 @@ abstract class AbstractSocket implements SocketInterface
      * @param string $host
      * @param int|null $port
      *
-     * @throws \Exception
+     * @throws SocketException
      */
-    protected function init(string $host = self::DEFAULT_HOST, ?int $port = self::DEFAULT_PORT): void
+    protected function init(string $host = self::DEFAULT_HOST, ?int $port = self::DEFAULT_PORT) : void
     {
         $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
         $this->validateSocket();
@@ -63,7 +66,7 @@ abstract class AbstractSocket implements SocketInterface
         $this->run();
     }
 
-    protected function close(): void
+    protected function close() : void
     {
         if (is_resource($this->socket)) socket_close($this->socket);
     }
@@ -71,7 +74,7 @@ abstract class AbstractSocket implements SocketInterface
     /**
      * @throws SocketException
      */
-    protected function validateSocket(): void
+    protected function validateSocket() : void
     {
         if (!is_resource($this->socket)) {
             SocketException::throwException(

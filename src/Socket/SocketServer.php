@@ -34,7 +34,7 @@ class SocketServer extends AbstractSocket
      *
      * @throws SocketException
      */
-    protected function run(): void
+    protected function run() : void
     {
         socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1);
         if (!socket_bind($this->socket, $this->host, $this->port)) {
@@ -57,7 +57,7 @@ class SocketServer extends AbstractSocket
      *
      * @param $threadNo
      */
-    public function listener($threadNo): void
+    public function listener($threadNo) : void
     {
         while (true) {
 
@@ -99,7 +99,7 @@ class SocketServer extends AbstractSocket
      *
      * @return bool
      */
-    public function isShotDown(): bool
+    public function isShotDown() : bool
     {
         return $this->shotDown;
     }
@@ -107,7 +107,7 @@ class SocketServer extends AbstractSocket
     /**
      * Exec command
      */
-    protected function execCommand(): void
+    protected function execCommand() : void
     {
         try {
             $command = explode(' ', trim($this->request));
