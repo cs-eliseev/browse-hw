@@ -4,6 +4,8 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendo
 
 use browse\Abstracts\AbstractScanner;
 use browse\BrowseDirectory;
+use browse\Exceptions\BrowseDirectoryException;
+use browse\Operations\Exceptions\ScannerException;
 use PHPUnit\Framework\TestCase;
 
 class TestBrowseDirectory extends TestCase
@@ -12,13 +14,13 @@ class TestBrowseDirectory extends TestCase
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        $dir1 = $this->createDir($patchDir);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
         $sub_dir1_struct = $this->createArrayStruct($sub_dir1, $dir1_struct['name']);
@@ -27,29 +29,29 @@ class TestBrowseDirectory extends TestCase
         $this->createDir($dir1);
         $this->createFile($dir1);
         $this->createFile($dir1);
-        array_push($structTest, $dir1_struct);
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
+        array_push($struct_test, $dir1_struct);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
 
         // get scan data
-        $structDir = $directory->showDir($patchDir, BrowseDirectory::OPERATION_SCAN);
+        $struct_dir = $directory->showDir($path_dir);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testShowF(): void
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        $this->createDir($patchDir);
-        $dir1 = $this->createDir($patchDir);
+        $this->createDir($path_dir);
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
         $sub_dir1_struct = $this->createArrayStruct($sub_dir1, $dir1_struct['name']);
@@ -58,27 +60,27 @@ class TestBrowseDirectory extends TestCase
         $this->createDir($dir1);
         $this->createFile($dir1);
         $this->createFile($dir1);
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
 
         // get scan data
-        $structDir = $directory->showDir($patchDir, BrowseDirectory::OPERATION_FILE);
+        $struct_dir = $directory->showDir($path_dir, BrowseDirectory::OPERATION_FILE);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testShowD(): void
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        $dir1 = $this->createDir($patchDir);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
         $sub_dir1_struct = $this->createArrayStruct($sub_dir1, $dir1_struct['name']);
@@ -87,29 +89,29 @@ class TestBrowseDirectory extends TestCase
         $this->createDir($dir1);
         $this->createFile($dir1);
         $this->createFile($dir1);
-        array_push($structTest, $dir1_struct);
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        $this->createFile($patchDir);
-        $this->createFile($patchDir);
+        array_push($struct_test, $dir1_struct);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        $this->createFile($path_dir);
+        $this->createFile($path_dir);
 
         // get scan data
-        $structDir = $directory->showDir($patchDir, BrowseDirectory::OPERATION_DIR);
+        $struct_dir = $directory->showDir($path_dir, BrowseDirectory::OPERATION_DIR);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testScanS(): void
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        $dir1 = $this->createDir($patchDir);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
         $sub_dir1_struct = $this->createArrayStruct($sub_dir1, $dir1_struct['name']);
@@ -120,76 +122,76 @@ class TestBrowseDirectory extends TestCase
         $dir1_struct['node'][] = $this->createArrayStruct($this->createDir($dir1), $dir1_struct['name']);
         $dir1_struct['node'][] = $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']);
         $dir1_struct['node'][] = $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']);
-        array_push($structTest, $dir1_struct);
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
+        array_push($struct_test, $dir1_struct);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
 
         // get scan data
-        $structDir = $directory->scanDir($patchDir, BrowseDirectory::OPERATION_SCAN);
+        $struct_dir = $directory->scanDir($path_dir);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testScanF(): void
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        $this->createDir($patchDir);
-        $dir1 = $this->createDir($patchDir);
+        $this->createDir($path_dir);
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
         $sub_dir1_struct = $this->createArrayStruct($sub_dir1, $dir1_struct['name']);
         $sub_dir1_file1 = $this->createFile($sub_dir1);
-        array_push($structTest, $this->createArrayStruct($sub_dir1_file1, $dir1_struct['name'] . DIRECTORY_SEPARATOR . $sub_dir1_struct['name']));
-        array_push($structTest, $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']));
-        array_push($structTest, $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']));
-        $this->createDir($patchDir);
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
-        array_push($structTest, $this->createArrayStruct($this->createFile($patchDir), ''));
+        array_push($struct_test, $this->createArrayStruct($sub_dir1_file1, $dir1_struct['name'] . DIRECTORY_SEPARATOR . $sub_dir1_struct['name']));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($dir1), $dir1_struct['name']));
+        $this->createDir($path_dir);
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createFile($path_dir), ''));
 
         // get scan data
-        $structDir = $directory->scanDir($patchDir, BrowseDirectory::OPERATION_FILE);
+        $struct_dir = $directory->scanDir($path_dir, BrowseDirectory::OPERATION_FILE);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testScanD(): void
     {
         $directory = new BrowseDirectory();
 
-        $patchDir = $this->createDir(__DIR__);
+        $path_dir = $this->createDir(__DIR__);
 
         // create test data
-        $structTest = [];
+        $struct_test = [];
 
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
 
-        $dir1 = $this->createDir($patchDir);
+        $dir1 = $this->createDir($path_dir);
         $dir1_struct = $this->createArrayStruct($dir1, '');
         $sub_dir1 = $this->createDir($dir1);
-        array_push($structTest, $this->createArrayStruct($sub_dir1, $dir1_struct['name']));
+        array_push($struct_test, $this->createArrayStruct($sub_dir1, $dir1_struct['name']));
         $this->createFile($sub_dir1);
-        array_push($structTest, $this->createArrayStruct($this->createDir($dir1), $dir1_struct['name']));
+        array_push($struct_test, $this->createArrayStruct($this->createDir($dir1), $dir1_struct['name']));
         $this->createFile($dir1);
         $this->createFile($dir1);
-        array_push($structTest, $dir1_struct);
-        array_push($structTest, $this->createArrayStruct($this->createDir($patchDir), ''));
-        $this->createFile($patchDir);
-        $this->createFile($patchDir);
+        array_push($struct_test, $dir1_struct);
+        array_push($struct_test, $this->createArrayStruct($this->createDir($path_dir), ''));
+        $this->createFile($path_dir);
+        $this->createFile($path_dir);
 
         // get scan data
-        $structDir = $directory->scanDir($patchDir, BrowseDirectory::OPERATION_DIR);
+        $struct_dir = $directory->scanDir($path_dir, BrowseDirectory::OPERATION_DIR);
 
         // validate data
-        $this->assertTrue($this->isValidateArray($structDir, $structTest));
+        $this->assertTrue($this->isValidateArray($struct_dir, $struct_test));
     }
 
     public function testBrowseEOperationIsNotExist(): void
@@ -197,18 +199,7 @@ class TestBrowseDirectory extends TestCase
         $directory = new BrowseDirectory();
 
         // create test data
-        $this->expectException(\Exception::class);
-
-        // get scan data
-        $directory->scanDir(__DIR__, '');
-    }
-
-    public function testBrowseEOperationUnknown(): void
-    {
-        $directory = new BrowseDirectory();
-
-        // create test data
-        $this->expectException(\Exception::class);
+        $this->expectException(BrowseDirectoryException::class);
 
         // get scan data
         $directory->scanDir(__DIR__, '');
@@ -219,10 +210,10 @@ class TestBrowseDirectory extends TestCase
         $directory = new BrowseDirectory();
 
         // create test data
-        $this->expectException(\Exception::class);
+        $this->expectException(ScannerException::class);
 
         // get scan data
-        $directory->scanDir('', BrowseDirectory::OPERATION_SCAN);
+        $directory->scanDir();
     }
 
     /**

@@ -12,11 +12,11 @@ class SocketTerminalServer extends Command
     public function configure()
     {
         $this->setName('server')
-            ->setDescription('Socket server')
-            ->setHelp('server 127.0.0.1 5030 [number]')
-            ->addArgument('host', InputArgument::REQUIRED, 'Set host')
-            ->addArgument('port', InputArgument::REQUIRED, 'Set port')
-            ->addArgument('threads', InputArgument::OPTIONAL, 'Set threads');
+             ->setDescription('Socket server')
+             ->setHelp('server 127.0.0.1 5030 [number]')
+             ->addArgument('host', InputArgument::REQUIRED, 'Set host')
+             ->addArgument('port', InputArgument::REQUIRED, 'Set port')
+             ->addArgument('threads', InputArgument::OPTIONAL, 'Set threads');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

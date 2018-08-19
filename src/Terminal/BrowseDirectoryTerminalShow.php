@@ -7,17 +7,18 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class BrowseDirectoryTerminalShow extends Command
 {
     public function configure()
     {
         $this->setName('show')
-            ->setDescription('Browse show directory info')
-            ->setHelp('show s|f|d ~/download [s|j]')
-            ->addArgument('operation', InputArgument::REQUIRED, 'Operation: view all, view dir, view file')
-            ->addArgument('dir_path', InputArgument::REQUIRED, 'Set directory path')
-            ->addArgument('response_options', InputArgument::OPTIONAL, 'Response options: string|json');
+             ->setDescription('Browse show directory info')
+             ->setHelp('show s|f|d ~/download [s|j]')
+             ->addArgument('operation', InputArgument::REQUIRED, 'Operation: view all, view dir, view file')
+             ->addArgument('dir_path', InputArgument::REQUIRED, 'Set directory path')
+             ->addArgument('response_options', InputArgument::OPTIONAL, 'Response options: string|json');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,7 +45,7 @@ class BrowseDirectoryTerminalShow extends Command
                 $input->getArgument('operation'),
                 $response_options
             );
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $msg = 'error: ' . $e->getMessage();
         }
 

@@ -5,7 +5,7 @@ namespace browse\Operations;
 use browse\Abstracts\AbstractScanner;
 use DirectoryIterator;
 
-class Scan extends AbstractScanner
+class ScannerFull extends AbstractScanner
 {
     protected  function getItem(DirectoryIterator $item, string $path, string $defaultPath = ''): array
     {

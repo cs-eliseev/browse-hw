@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class BrowseDirectoryTerminalScan extends Command
 {
@@ -44,7 +45,7 @@ class BrowseDirectoryTerminalScan extends Command
                         $input->getArgument('operation'),
                         $response_options
                     );
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $msg = 'error: ' . $e->getMessage();
         }
 

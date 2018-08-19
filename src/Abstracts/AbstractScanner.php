@@ -3,8 +3,8 @@
 namespace browse\Abstracts;
 
 use browse\Interfaces\ScannerInterface;
+use browse\Operations\Exceptions\ScannerException;
 use DirectoryIterator;
-use Exception;
 
 abstract class AbstractScanner implements ScannerInterface
 {
@@ -12,18 +12,12 @@ abstract class AbstractScanner implements ScannerInterface
     const TYPE_FILE = 'file';
     const TYPE_LINK = 'link';
 
-    const ERROR_DIR_IS_NOT_EXIST = 1;
-
     protected $pathDir = '';
 
     protected $showLink = false;
     protected $fileMode = false;
 
     protected $fullScan = false;
-
-    protected $errors = [
-        self::ERROR_DIR_IS_NOT_EXIST => 'Directory is not exist',
-    ];
 
     public function __construct(string $pathDir = '')
     {
@@ -36,7 +30,7 @@ abstract class AbstractScanner implements ScannerInterface
      * Show directory
      *
      * @return array
-     * @throws Exception
+     * @throws ScannerException
      */
     public function showDir(): array
     {
@@ -47,7 +41,7 @@ abstract class AbstractScanner implements ScannerInterface
      * Show directory & sub directory
      *
      * @return array
-     * @throws Exception
+     * @throws ScannerException
      */
     public function scanDir(): array
     {
@@ -67,15 +61,12 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $defaultPath
      * @return array
-     * @throws Exception
+     * @throws ScannerException
      */
     protected function viewDir(string $defaultPath = ''): array
     {
         // check directory
-        if (!is_dir($this->pathDir)) {
-            echo $this->pathDir;
-            $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $this->pathDir);
-        }
+        $this->validateDir($this->pathDir);
 
         $iterator = new DirectoryIterator($this->pathDir);
 
@@ -147,14 +138,12 @@ abstract class AbstractScanner implements ScannerInterface
      * Set current path directory
      *
      * @param string $pathDir
-     * @throws Exception
+     * @throws ScannerException
      */
     public function setPathDir(string $pathDir): void
     {
         // check directory
-        if (!is_dir($pathDir)) {
-            $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $pathDir);
-        }
+        $this->validateDir($pathDir);
 
         $this->pathDir = $pathDir;
     }
@@ -174,7 +163,7 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $pathDir
      * @return string
-     * @throws Exception
+     * @throws ScannerException
      */
     public function getCurrentDirName(string $pathDir = ''): string
     {
@@ -185,9 +174,7 @@ abstract class AbstractScanner implements ScannerInterface
         } else {
 
             // check directory
-            if (!is_dir($pathDir)) {
-                $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $pathDir);
-            }
+            $this->validateDir($pathDir);
 
             $dir = $pathDir;
         }
@@ -202,7 +189,7 @@ abstract class AbstractScanner implements ScannerInterface
      *
      * @param string $pathDir
      * @return string
-     * @throws Exception
+     * @throws ScannerException
      */
     public function getParentDir(string $pathDir = ''): string
     {
@@ -213,9 +200,7 @@ abstract class AbstractScanner implements ScannerInterface
         } else {
 
             // check directory
-            if (!is_dir($pathDir)) {
-                $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $pathDir);
-            }
+            $this->validateDir($pathDir);
 
             $list_path = explode(DIRECTORY_SEPARATOR, $pathDir);
         }
@@ -241,47 +226,32 @@ abstract class AbstractScanner implements ScannerInterface
     /**
      * Go to sub directory
      *
-     * @param string $subDir
+     * @param string $subDirName
      * @return string
-     * @throws Exception
+     * @throws ScannerException
      */
-    public function gotoSubDir(string $subDir): string
+    public function gotoSubDir(string $subDirName): string
     {
-        $new_dir = $this->pathDir . DIRECTORY_SEPARATOR . $subDir;
+        $path_dir = $this->pathDir . DIRECTORY_SEPARATOR . $subDirName;
 
         // check directory
-        if (!is_dir($new_dir)) {
-            $this->throwException(self::ERROR_DIR_IS_NOT_EXIST, 'current path: ' . $new_dir);
-        }
+        $this->validateDir($path_dir);
 
-        $this->pathDir = $new_dir;
+        $this->pathDir = $path_dir;
 
         return $this->pathDir;
     }
 
     /**
-     * Check oct (0777)
+     * Check path directory
      *
-     * @param $oct
-     * @return bool
+     * @param $pathDir
+     * @throws ScannerException
      */
-    protected function isOct($oct): bool
+    public function validateDir($pathDir): void
     {
-        return (bool)preg_match("/^[0-7]{4}$/", $oct);
-    }
-
-    /**
-     * Exceptions
-     *
-     * @param int $code
-     * @param string $msg
-     * @throws Exception
-     */
-    protected function throwException(int $code, string $msg = ''): void
-    {
-        throw new Exception(
-            $this->errors[$code] . ($msg ? ', ' . $msg : ''),
-            $code
-        );
+        if (!is_dir($this->pathDir)) {
+            ScannerException::throwException(ScannerException::ERROR_DIR_NOT_EXIST, 'current path: ' . $pathDir);
+        }
     }
 }

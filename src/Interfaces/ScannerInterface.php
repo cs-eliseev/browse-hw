@@ -8,7 +8,6 @@ interface ScannerInterface
      * Show directory
      *
      * @return array
-     * @throws Exception
      */
     public function showDir(): array;
 
@@ -77,4 +76,11 @@ interface ScannerInterface
      * @return string
      */
     public function gotoSubDir(string $subDir): string;
+
+    /**
+     * Check path directory
+     *
+     * @param $pathDir
+     */
+    public function validateDir($pathDir): void;
 }

@@ -4,7 +4,7 @@ namespace browse\Socket;
 
 use browse\Abstracts\AbstractSocket;
 use browse\BrowseDirectory;
-use Exception;
+use browse\Socket\Exceptions\SocketException;
 
 class SocketServer extends AbstractSocket
 {
@@ -16,7 +16,8 @@ class SocketServer extends AbstractSocket
      *
      * @param string $host
      * @param int|null $port
-     * @throws \Exception
+     *
+     * @throws SocketException
      */
     public function __construct(string $host = '', ?int $port = null)
     {
@@ -28,18 +29,34 @@ class SocketServer extends AbstractSocket
         $this->close();
     }
 
+    /**
+     * Run server
+     *
+     * @throws SocketException
+     */
     protected function run(): void
     {
         socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1);
         if (!socket_bind($this->socket, $this->host, $this->port)) {
-            throw new \Exception('Socket bind failed: ' . socket_strerror(socket_last_error()));
+            SocketException::throwException(
+                SocketException::ERROR_SOCKET_BIND_FAILED,
+                socket_strerror(socket_last_error())
+            );
         }
 
         if (!socket_listen($this->socket, 1)) {
-            throw new \Exception('Socket listen failed: ' . socket_strerror(socket_last_error()));
+            SocketException::throwException(
+                SocketException::ERROR_SOCKET_LISTEN_FAILED,
+                socket_strerror(socket_last_error())
+            );
         }
     }
 
+    /**
+     * Listener
+     *
+     * @param $threadNo
+     */
     public function listener($threadNo): void
     {
         while (true) {
@@ -78,6 +95,8 @@ class SocketServer extends AbstractSocket
     }
 
     /**
+     * Is shot down
+     *
      * @return bool
      */
     public function isShotDown(): bool
@@ -85,6 +104,9 @@ class SocketServer extends AbstractSocket
         return $this->shotDown;
     }
 
+    /**
+     * Exec command
+     */
     protected function execCommand(): void
     {
         try {
