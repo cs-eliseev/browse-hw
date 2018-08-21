@@ -9,8 +9,6 @@ class BrowseBaseException extends Exception implements BrowseDirectoryExceptionI
 {
     const ERROR_DIR_NOT_EXIST = 1;
 
-    const ERROR_OPERATION_IS_NOT_EXIST = 100;
-
     const ERROR_SOCKET_CREATE_FAILED = 200;
     const ERROR_SOCKET_CONNECT_FAILED = 201;
     const ERROR_SOCKET_BIND_FAILED = 202;
@@ -18,7 +16,6 @@ class BrowseBaseException extends Exception implements BrowseDirectoryExceptionI
 
     protected static $errors = [
         self::ERROR_DIR_NOT_EXIST => 'Directory is not exist',
-        self::ERROR_OPERATION_IS_NOT_EXIST => 'Operation is not exist',
         self::ERROR_SOCKET_CREATE_FAILED => 'Socket created failed',
         self::ERROR_SOCKET_CONNECT_FAILED => 'Socket connect failed',
         self::ERROR_SOCKET_BIND_FAILED => 'Socket bind failed',
