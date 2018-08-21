@@ -252,7 +252,7 @@ abstract class AbstractScanner implements ScannerInterface
      */
     public function validateDir($pathDir) : ScannerInterface
     {
-        if (!is_dir($this->pathDir)) {
+        if (!is_dir($pathDir)) {
             ScannerException::throwException(ScannerException::ERROR_DIR_NOT_EXIST, 'current path: ' . $pathDir);
         }
 
