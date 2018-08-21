@@ -71,7 +71,7 @@ Response options:
 | s | response string |
 | j | response array |
 
-**Example*
+**Example**
 
 ```php
 #!/usr/bin/env php
@@ -84,20 +84,114 @@ $app->addCommands([
 $app->run()
 ```
 
+*Start server*
 > socket server 127.0.0.1 5030 2
+
+*Send client data*
 > socket client 127.0.0.1 5030 show s ~/tests j
 
-result:
+*Result client data*
 ```
-[{"name":"1534877041_219","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_219","relative_path":"","relative_path_name":"/1534877041_219","type":"directory"},{"name":"1534877041_3364.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_3364.txt","relative_path":"","relative_path_name":"/1534877041_3364.txt","short_name":"1534877041_3364","extension":"txt","type":"file"},{"name":"1534877041_7878.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_7878.txt","relative_path":"","relative_path_name":"/1534877041_7878.txt","short_name":"1534877041_7878","extension":"txt","type":"file"},{"name":"1534877041_9129","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_9129","relative_path":"","relative_path_name":"/1534877041_9129","type":"directory"},{"name":"1534877041_958","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_958","relative_path":"","relative_path_name":"/1534877041_958","type":"directory"}]
+[
+    {
+        "name": "1534877041_219",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_219",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_219",
+        "type": "directory"
+    },
+    {
+        "name": "1534877041_3364.txt",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_3364.txt",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_3364.txt",
+        "short_name": "1534877041_3364",
+        "extension": "txt",
+        "type": "file"
+    },
+    {
+        "name": "1534877041_7878.txt",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_7878.txt",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_7878.txt",
+        "short_name": "1534877041_7878",
+        "extension": "txt",
+        "type": "file"
+    },
+    {
+        "name": "1534877041_9129",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_9129",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_9129",
+        "type": "directory"
+    },
+    {
+        "name": "1534877041_958",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_958",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_958",
+        "type": "directory"
+    }
+]
 ```
 
+*Send telnte data*
 > telnte 127.0.0.1 5030
-> show s ~/tests j
+> show s /home/browse/tests j
 
-result:
+*Result telnet data*
 ```
-[{"name":"1534877041_219","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_219","relative_path":"","relative_path_name":"/1534877041_219","type":"directory"},{"name":"1534877041_3364.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_3364.txt","relative_path":"","relative_path_name":"/1534877041_3364.txt","short_name":"1534877041_3364","extension":"txt","type":"file"},{"name":"1534877041_7878.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_7878.txt","relative_path":"","relative_path_name":"/1534877041_7878.txt","short_name":"1534877041_7878","extension":"txt","type":"file"},{"name":"1534877041_9129","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_9129","relative_path":"","relative_path_name":"/1534877041_9129","type":"directory"},{"name":"1534877041_958","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_958","relative_path":"","relative_path_name":"/1534877041_958","type":"directory"}]
+[
+    {
+        "name": "1534877041_219",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_219",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_219",
+        "type": "directory"
+    },
+    {
+        "name": "1534877041_3364.txt",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_3364.txt",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_3364.txt",
+        "short_name": "1534877041_3364",
+        "extension": "txt",
+        "type": "file"
+    },
+    {
+        "name": "1534877041_7878.txt",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_7878.txt",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_7878.txt",
+        "short_name": "1534877041_7878",
+        "extension": "txt",
+        "type": "file"
+    },
+    {
+        "name": "1534877041_9129",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_9129",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_9129",
+        "type": "directory"
+    },
+    {
+        "name": "1534877041_958",
+        "path": "/home/browse/tests/1534877041_1830",
+        "path_name": "/home/browse/tests/1534877041_1830/1534877041_958",
+        "relative_path": "",
+        "relative_path_name": "/1534877041_958",
+        "type": "directory"
+    }
+]
 ```
 
 **Client command**
@@ -128,7 +222,7 @@ Response options:
 | s | response string |
 | j | response array |
 
-**Example*
+**Example**
 
 ```php
 #!/usr/bin/env php
