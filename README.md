@@ -85,8 +85,20 @@ $app->run()
 ```
 
 > socket server 127.0.0.1 5030 2
-> socket client 127.0.0.1 5030 show s ~/example j
+> socket client 127.0.0.1 5030 show s ~/tests j
+
+result:
+```
+[{"name":"1534877041_219","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_219","relative_path":"","relative_path_name":"/1534877041_219","type":"directory"},{"name":"1534877041_3364.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_3364.txt","relative_path":"","relative_path_name":"/1534877041_3364.txt","short_name":"1534877041_3364","extension":"txt","type":"file"},{"name":"1534877041_7878.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_7878.txt","relative_path":"","relative_path_name":"/1534877041_7878.txt","short_name":"1534877041_7878","extension":"txt","type":"file"},{"name":"1534877041_9129","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_9129","relative_path":"","relative_path_name":"/1534877041_9129","type":"directory"},{"name":"1534877041_958","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_958","relative_path":"","relative_path_name":"/1534877041_958","type":"directory"}]
+```
+
 > telnte 127.0.0.1 5030
+> show s ~/tests j
+
+result:
+```
+[{"name":"1534877041_219","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_219","relative_path":"","relative_path_name":"/1534877041_219","type":"directory"},{"name":"1534877041_3364.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_3364.txt","relative_path":"","relative_path_name":"/1534877041_3364.txt","short_name":"1534877041_3364","extension":"txt","type":"file"},{"name":"1534877041_7878.txt","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_7878.txt","relative_path":"","relative_path_name":"/1534877041_7878.txt","short_name":"1534877041_7878","extension":"txt","type":"file"},{"name":"1534877041_9129","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_9129","relative_path":"","relative_path_name":"/1534877041_9129","type":"directory"},{"name":"1534877041_958","path":"/home/browse/tests/1534877041_1830","path_name":"/home/browse/tests/1534877041_1830/1534877041_958","relative_path":"","relative_path_name":"/1534877041_958","type":"directory"}]
+```
 
 **Client command**
 
@@ -129,7 +141,7 @@ $app->addCommands([
 $app->run();
 ```
 
-> run scan s ~/example
+> run scan s ~/tests
 
 **Response**
 
@@ -260,7 +272,7 @@ Response options:
 
 ```php
 $browse = new BrowseDirectory();
-$arrayStructureDirectory = $browse->setPathDir('~/Example')
+$arrayStructureDirectory = $browse->setPathDir('~/tests')
                                   ->setOperation('s')
                                   ->scanDir();
 print_r($arrayStructureDirectory);
